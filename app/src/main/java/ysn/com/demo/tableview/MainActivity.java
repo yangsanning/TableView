@@ -26,10 +26,12 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity implements TableScrollView.OnScrollChangeListener {
 
-    private LinearLayoutManager contentLayoutManager;
+    private FirstColumnAdapter firstColumnAdapter;
     private ContentAdapter contentAdapter;
+    private LinearLayoutManager contentLayoutManager;
 
     TableScrollView headScrollView, contentScrollView;
+    private RecyclerView firstColumnRecyclerView, contentRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements TableScrollView.O
 
         initScrollView();
         initRefreshLayout();
+        initFirstColumnRecyclerView();
         initContentRecyclerView();
     }
 
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements TableScrollView.O
                             data.add("哈哈");
                         }
                         refreshLayout.finishLoadMore();
+                        firstColumnAdapter.setNewData(data);
                         contentAdapter.setNewData(data);
                     } else {
                         refreshLayout.finishLoadMoreWithNoMoreData();
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements TableScrollView.O
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 smartRefreshLayout.postDelayed(() -> {
+                    firstColumnAdapter.setNewData(getNewData());
                     contentAdapter.setNewData(getNewData());
                     refreshLayout.finishRefresh();
                 }, 300);
@@ -78,8 +83,31 @@ public class MainActivity extends AppCompatActivity implements TableScrollView.O
         });
     }
 
+    private void initFirstColumnRecyclerView() {
+        firstColumnRecyclerView = findViewById(R.id.main_activity_first_column);
+        firstColumnRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        firstColumnAdapter = new FirstColumnAdapter();
+        firstColumnAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Log.d("test", contentLayoutManager.findFirstVisibleItemPosition() + " - " +
+                    contentLayoutManager.findLastVisibleItemPosition());
+            }
+        });
+        firstColumnRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if(recyclerView.getScrollState()!= RecyclerView.SCROLL_STATE_IDLE){
+                    contentRecyclerView.scrollBy(dx,dy);
+                }
+            }
+        });
+        firstColumnRecyclerView.setAdapter(firstColumnAdapter);
+        firstColumnAdapter.setNewData(getNewData());
+    }
+
     private void initContentRecyclerView() {
-        RecyclerView contentRecyclerView = findViewById(R.id.main_activity_content);
+        contentRecyclerView = findViewById(R.id.main_activity_content);
         contentLayoutManager = new LinearLayoutManager(this);
         contentLayoutManager.setOrientation(RecyclerView.VERTICAL);
         contentRecyclerView.setLayoutManager(contentLayoutManager);
@@ -89,6 +117,14 @@ public class MainActivity extends AppCompatActivity implements TableScrollView.O
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Log.d("test", contentLayoutManager.findFirstVisibleItemPosition() + " - " +
                     contentLayoutManager.findLastVisibleItemPosition());
+            }
+        });
+        contentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if(recyclerView.getScrollState()!= RecyclerView.SCROLL_STATE_IDLE){
+                    firstColumnRecyclerView.scrollBy(dx,dy);
+                }
             }
         });
         contentRecyclerView.setAdapter(contentAdapter);

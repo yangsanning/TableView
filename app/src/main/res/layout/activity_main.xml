@@ -70,18 +70,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ysn.com.demo.tableview.TableScrollView
-                    android:id="@+id/main_activity_content_scroll_view"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="none">
+                    android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/main_activity_content"
+                        android:id="@+id/main_activity_first_column"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:focusable="false"
+                        android:overScrollMode="never" />
+
+                    <ysn.com.demo.tableview.TableScrollView
+                        android:id="@+id/main_activity_content_scroll_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:focusable="false" />
-                </ysn.com.demo.tableview.TableScrollView>
+                        android:scrollbars="none">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/main_activity_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:focusable="false"
+                            android:overScrollMode="never" />
+                    </ysn.com.demo.tableview.TableScrollView>
+                </LinearLayout>
             </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         </LinearLayout>
 </LinearLayout>
