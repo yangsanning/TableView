@@ -13,12 +13,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author yangsanning
+ * @ClassName MainActivity
+ * @Description 一句话概括作用
+ * @Date 2019/11/29
+ * @History 2019/11/29 author: description:
+ */
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<TableScrollView> scrollViewList = new ArrayList<>();
+    LinearLayoutManager contentLayoutManager;
 
     RecyclerView contentRecyclerView;
-    private LinearLayoutManager contentLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +49,6 @@ public class MainActivity extends AppCompatActivity {
         });
         contentRecyclerView.setAdapter(contentAdapter);
         contentAdapter.setNewData(getNewData());
-    }
-
-    /**
-     * 改变所有滚动视图位置
-     */
-    private void changeAllScrollView(int x, int y) {
-        if (scrollViewList.size() > 0) {
-            for (int i = 0; i < scrollViewList.size(); i++) {
-                scrollViewList.get(i).scrollTo(x, y);
-            }
-        }
     }
 
     private List<String> getNewData() {
