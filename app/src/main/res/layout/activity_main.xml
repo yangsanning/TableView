@@ -62,27 +62,6 @@
                         android:gravity="center"
                         android:text="标题6"
                         android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="60dp"
-                        android:gravity="center"
-                        android:text="标题7"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="60dp"
-                        android:gravity="center"
-                        android:text="标题8"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="60dp"
-                        android:gravity="center"
-                        android:text="标题9"
-                        android:textColor="@android:color/white" />
                 </LinearLayout>
             </ysn.com.demo.tableview.TableScrollView>
 
@@ -100,7 +79,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/main_activity_content"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:focusable="false" />
                 </ysn.com.demo.tableview.TableScrollView>
             </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         </LinearLayout>

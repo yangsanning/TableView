@@ -49,27 +49,31 @@ public class MainActivity extends AppCompatActivity implements TableScrollView.O
     }
 
     private void initRefreshLayout() {
-        SmartRefreshLayout refreshLayout = findViewById(R.id.main_activity_refresh_layout);
-        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+        SmartRefreshLayout smartRefreshLayout = findViewById(R.id.main_activity_refresh_layout);
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                List<String> data = contentAdapter.getData();
-                int size = data.size();
-                if (size < 60) {
-                    for (int i = size; i < (size + 20); i++) {
-                        data.add("哈哈");
+                smartRefreshLayout.postDelayed(() -> {
+                    List<String> data = contentAdapter.getData();
+                    int size = data.size();
+                    if (size < 60) {
+                        for (int i = size; i < (size + 20); i++) {
+                            data.add("哈哈");
+                        }
+                        refreshLayout.finishLoadMore();
+                        contentAdapter.setNewData(data);
+                    } else {
+                        refreshLayout.finishLoadMoreWithNoMoreData();
                     }
-                    refreshLayout.finishLoadMore();
-                    contentAdapter.setNewData(data);
-                } else {
-                    refreshLayout.finishLoadMoreWithNoMoreData();
-                }
+                }, 300);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                contentAdapter.setNewData(getNewData());
-                refreshLayout.finishRefresh();
+                smartRefreshLayout.postDelayed(() -> {
+                    contentAdapter.setNewData(getNewData());
+                    refreshLayout.finishRefresh();
+                }, 300);
             }
         });
     }

@@ -36,30 +36,12 @@
                 android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:gravity="center"
-                android:text="内容5" />.
+                android:text="内容5" />
 
             <TextView
                 android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:text="内容6" />
-
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:text="内容7" />
-
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:text="内容8" />
-
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:text="内容9" />
         </LinearLayout>
 </LinearLayout>
