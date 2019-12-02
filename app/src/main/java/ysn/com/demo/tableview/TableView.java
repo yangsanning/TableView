@@ -3,8 +3,6 @@ package ysn.com.demo.tableview;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -13,13 +11,9 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author yangsanning
@@ -32,11 +26,12 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
 
     private Context context;
 
-    private FirstColumnAdapter firstColumnAdapter;
-    private ContentAdapter contentAdapter;
     private LinearLayoutManager contentLayoutManager;
 
-    TableScrollView headScrollView, contentScrollView;
+    private OnTableRefreshAndLoadMoreListener onTableRefreshAndLoadMoreListener;
+
+    private TableScrollView headScrollView, contentScrollView;
+    private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView firstColumnRecyclerView, contentRecyclerView;
 
     public TableView(Context context) {
@@ -69,55 +64,34 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
     }
 
     private void initScrollView() {
-        headScrollView = findViewById(R.id.main_activity_head_scroll_view);
+        headScrollView = findViewById(R.id.table_view_head_scroll_view);
         headScrollView.setOnScrollChangeListener(this);
-        contentScrollView = findViewById(R.id.main_activity_content_scroll_view);
+        contentScrollView = findViewById(R.id.table_view_content_scroll_view);
         contentScrollView.setOnScrollChangeListener(this);
     }
 
     private void initRefreshLayout() {
-        SmartRefreshLayout smartRefreshLayout = findViewById(R.id.main_activity_refresh_layout);
+        smartRefreshLayout = findViewById(R.id.table_view_refresh_layout);
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                smartRefreshLayout.postDelayed(() -> {
-                    List<String> data = contentAdapter.getData();
-                    int size = data.size();
-                    if (size < 60) {
-                        for (int i = size; i < (size + 20); i++) {
-                            data.add("哈哈");
-                        }
-                        refreshLayout.finishLoadMore();
-                        firstColumnAdapter.setNewData(data);
-                        contentAdapter.setNewData(data);
-                    } else {
-                        refreshLayout.finishLoadMoreWithNoMoreData();
-                    }
-                }, 300);
+                if (onTableRefreshAndLoadMoreListener != null) {
+                    onTableRefreshAndLoadMoreListener.onTableLoadMore();
+                }
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                smartRefreshLayout.postDelayed(() -> {
-                    firstColumnAdapter.setNewData(getNewData());
-                    contentAdapter.setNewData(getNewData());
-                    refreshLayout.finishRefresh();
-                }, 300);
+                if (onTableRefreshAndLoadMoreListener != null) {
+                    onTableRefreshAndLoadMoreListener.onTableRefresh();
+                }
             }
         });
     }
 
     private void initFirstColumnRecyclerView() {
-        firstColumnRecyclerView = findViewById(R.id.main_activity_first_column);
+        firstColumnRecyclerView = findViewById(R.id.table_view_first_column);
         firstColumnRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        firstColumnAdapter = new FirstColumnAdapter();
-        firstColumnAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Log.d("test", contentLayoutManager.findFirstVisibleItemPosition() + " - " +
-                    contentLayoutManager.findLastVisibleItemPosition());
-            }
-        });
         firstColumnRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -126,23 +100,13 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
                 }
             }
         });
-        firstColumnRecyclerView.setAdapter(firstColumnAdapter);
-        firstColumnAdapter.setNewData(getNewData());
     }
 
     private void initContentRecyclerView() {
-        contentRecyclerView = findViewById(R.id.main_activity_content);
+        contentRecyclerView = findViewById(R.id.table_view_content);
         contentLayoutManager = new LinearLayoutManager(context);
         contentLayoutManager.setOrientation(RecyclerView.VERTICAL);
         contentRecyclerView.setLayoutManager(contentLayoutManager);
-        contentAdapter = new ContentAdapter();
-        contentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Log.d("test", contentLayoutManager.findFirstVisibleItemPosition() + " - " +
-                    contentLayoutManager.findLastVisibleItemPosition());
-            }
-        });
         contentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -152,16 +116,6 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
                 }
             }
         });
-        contentRecyclerView.setAdapter(contentAdapter);
-        contentAdapter.setNewData(getNewData());
-    }
-
-    private List<String> getNewData() {
-        List<String> dataList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            dataList.add("哈哈");
-        }
-        return dataList;
     }
 
     @Override
@@ -181,5 +135,74 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
     @Override
     public void onScrollFarRight(TableScrollView scrollView) {
 
+    }
+
+    public TableView setFirstColumnAdapter(RecyclerView.Adapter firstColumnAdapter) {
+        firstColumnRecyclerView.setAdapter(firstColumnAdapter);
+        return this;
+    }
+
+    public TableView setContentAdapter(RecyclerView.Adapter contentAdapter) {
+        contentRecyclerView.setAdapter(contentAdapter);
+        return this;
+    }
+
+    /**
+     * 刷新成功
+     */
+    public void refreshSuccess() {
+        smartRefreshLayout.finishRefresh();
+    }
+
+    /**
+     * 刷新失败
+     */
+    public void refreshFailure() {
+        smartRefreshLayout.finishRefresh(false);
+    }
+
+    /**
+     * 加载更多成功
+     */
+    public void loadMoreSuccess() {
+        smartRefreshLayout.finishLoadMore();
+    }
+
+    /**
+     * 加载更多成功且没有更多数据
+     */
+    public void loadMoreSuccessWithNoMoreData() {
+        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+    }
+
+    /**
+     * 加载更多失败
+     */
+    public void loadMoreFailure() {
+        smartRefreshLayout.finishLoadMore(false);
+    }
+
+    /**
+     * 下拉刷新以及上拉加载更多监听
+     */
+    public TableView setOnTableRefreshAndLoadMoreListener(OnTableRefreshAndLoadMoreListener onTableRefreshAndLoadMoreListener) {
+        this.onTableRefreshAndLoadMoreListener = onTableRefreshAndLoadMoreListener;
+        return this;
+    }
+
+    /**
+     * 下拉刷新以及上拉加载更多监听器
+     */
+    public interface OnTableRefreshAndLoadMoreListener {
+
+        /**
+         * 下拉刷新
+         */
+        void onTableRefresh();
+
+        /**
+         * 上拉加载更多
+         */
+        void onTableLoadMore();
     }
 }
