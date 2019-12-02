@@ -84,10 +84,16 @@
                     android:textColor="@android:color/white" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/main_activity_content"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/main_activity_refresh_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/main_activity_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         </LinearLayout>
     </ysn.com.demo.tableview.TableScrollView>
 </LinearLayout>
