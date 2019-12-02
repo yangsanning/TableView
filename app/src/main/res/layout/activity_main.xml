@@ -4,96 +4,104 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <ysn.com.demo.tableview.TableScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
-
         <LinearLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <ysn.com.demo.tableview.TableScrollView
+                android:id="@+id/main_activity_head_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:orientation="horizontal">
+                android:scrollbars="none">
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="标题1"
-                    android:textColor="@android:color/white" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="标题2"
-                    android:textColor="@android:color/white" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text="标题1"
+                        android:textColor="@android:color/white" />
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="标题3"
-                    android:textColor="@android:color/white" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text="标题2"
+                        android:textColor="@android:color/white" />
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="标题4"
-                    android:textColor="@android:color/white" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text="标题3"
+                        android:textColor="@android:color/white" />
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="标题5"
-                    android:textColor="@android:color/white" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text="标题4"
+                        android:textColor="@android:color/white" />
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="标题6"
-                    android:textColor="@android:color/white" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text="标题5"
+                        android:textColor="@android:color/white" />
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="标题7"
-                    android:textColor="@android:color/white" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text="标题6"
+                        android:textColor="@android:color/white" />
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="标题8"
-                    android:textColor="@android:color/white" />
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text="标题7"
+                        android:textColor="@android:color/white" />
 
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:gravity="center"
-                    android:text="标题9"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text="标题8"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:text="标题9"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+            </ysn.com.demo.tableview.TableScrollView>
 
             <com.scwang.smartrefresh.layout.SmartRefreshLayout
                 android:id="@+id/main_activity_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/main_activity_content"
+                <ysn.com.demo.tableview.TableScrollView
+                    android:id="@+id/main_activity_content_scroll_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/main_activity_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </ysn.com.demo.tableview.TableScrollView>
             </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         </LinearLayout>
-    </ysn.com.demo.tableview.TableScrollView>
 </LinearLayout>

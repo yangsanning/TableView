@@ -24,21 +24,28 @@ import java.util.List;
  * @Date 2019/11/29
  * @History 2019/11/29 author: description:
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TableScrollView.OnScrollChangeListener {
 
-    LinearLayoutManager contentLayoutManager;
+    private LinearLayoutManager contentLayoutManager;
     private ContentAdapter contentAdapter;
 
-    RecyclerView contentRecyclerView;
+    TableScrollView headScrollView, contentScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initScrollView();
         initRefreshLayout();
-
         initContentRecyclerView();
+    }
+
+    private void initScrollView() {
+        headScrollView = findViewById(R.id.main_activity_head_scroll_view);
+        headScrollView.setOnScrollChangeListener(this);
+        contentScrollView = findViewById(R.id.main_activity_content_scroll_view);
+        contentScrollView.setOnScrollChangeListener(this);
     }
 
     private void initRefreshLayout() {
@@ -68,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initContentRecyclerView() {
-        contentRecyclerView = findViewById(R.id.main_activity_content);
+        RecyclerView contentRecyclerView = findViewById(R.id.main_activity_content);
         contentLayoutManager = new LinearLayoutManager(this);
         contentLayoutManager.setOrientation(RecyclerView.VERTICAL);
         contentRecyclerView.setLayoutManager(contentLayoutManager);
@@ -90,5 +97,24 @@ public class MainActivity extends AppCompatActivity {
             dataList.add("哈哈");
         }
         return dataList;
+    }
+
+    @Override
+    public void onScrollChanged(TableScrollView scrollView, int x, int y) {
+        if (scrollView.equals(headScrollView)) {
+            contentScrollView.scrollTo(x, y);
+        } else {
+            headScrollView.scrollTo(x, y);
+        }
+    }
+
+    @Override
+    public void onScrollFarLeft(TableScrollView scrollView) {
+
+    }
+
+    @Override
+    public void onScrollFarRight(TableScrollView scrollView) {
+
     }
 }
