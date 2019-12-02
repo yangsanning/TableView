@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="内容1" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="内容2" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="内容3" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="内容4" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="内容5" />.
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="内容6" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="内容7" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="内容8" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="内容9" />
+        </LinearLayout>
+</LinearLayout>
