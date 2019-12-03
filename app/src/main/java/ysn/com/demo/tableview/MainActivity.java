@@ -1,6 +1,7 @@
 package ysn.com.demo.tableview;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -61,6 +62,10 @@ public class MainActivity extends AppCompatActivity  {
         })
             .setFirstColumnAdapter(firstColumnAdapter)
             .setContentAdapter(contentAdapter);
+
+        // 禁止ScrollView的回弹
+        tableView.getHeadScrollView().setOverScrollMode(View.OVER_SCROLL_NEVER);
+        tableView.getContentScrollView().setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         firstColumnAdapter.setNewData(getNewData());
         contentAdapter.setNewData(getNewData());

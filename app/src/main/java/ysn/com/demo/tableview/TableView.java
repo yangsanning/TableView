@@ -26,8 +26,6 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
 
     private Context context;
 
-    private LinearLayoutManager contentLayoutManager;
-
     private OnTableRefreshAndLoadMoreListener onTableRefreshAndLoadMoreListener;
 
     private TableScrollView headScrollView, contentScrollView;
@@ -104,9 +102,7 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
 
     private void initContentRecyclerView() {
         contentRecyclerView = findViewById(R.id.table_view_content);
-        contentLayoutManager = new LinearLayoutManager(context);
-        contentLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        contentRecyclerView.setLayoutManager(contentLayoutManager);
+        contentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         contentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -137,11 +133,52 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
 
     }
 
+    /**
+     * 获取头部的横向 ScrollView
+     */
+    public TableScrollView getHeadScrollView() {
+        return headScrollView;
+    }
+
+    /**
+     * 获取内容的横向 ScrollView
+     */
+    public TableScrollView getContentScrollView() {
+        return contentScrollView;
+    }
+
+    /**
+     * 获取刷新控件(https://github.com/scwang90/SmartRefreshLayout)
+     */
+    public SmartRefreshLayout getSmartRefreshLayout() {
+        return smartRefreshLayout;
+    }
+
+    /**
+     * 获取首列 RecyclerView
+     */
+    public RecyclerView getFirstColumnRecyclerView() {
+        return firstColumnRecyclerView;
+    }
+
+    /**
+     * 获取内容 RecyclerView
+     */
+    public RecyclerView getContentRecyclerView() {
+        return contentRecyclerView;
+    }
+
+    /**
+     * 设置首列 RecyclerView.Adapter
+     */
     public TableView setFirstColumnAdapter(RecyclerView.Adapter firstColumnAdapter) {
         firstColumnRecyclerView.setAdapter(firstColumnAdapter);
         return this;
     }
 
+    /**
+     * 设置内容 RecyclerView.Adapter
+     */
     public TableView setContentAdapter(RecyclerView.Adapter contentAdapter) {
         contentRecyclerView.setAdapter(contentAdapter);
         return this;
