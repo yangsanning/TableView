@@ -1,4 +1,4 @@
-package ysn.com.demo.tableview;
+package ysn.com.view;
 
 import android.content.Context;
 import android.os.Build;
@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import ysn.com.view.tableview.R;
 
 /**
  * @Author yangsanning

@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <ysn.com.demo.tableview.TableView
+    <ysn.com.view.TableView
         android:id="@+id/main_activity_table_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

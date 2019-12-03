@@ -1,15 +1,15 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.ext.version.compileSdkVersion
 
     defaultConfig {
-        applicationId "ysn.com.demo.tableview"
         minSdkVersion  rootProject.ext.version.minSdkVersion
         targetSdkVersion rootProject.ext.version.targetSdkVersion
         versionCode rootProject.ext.version.versionCode
         versionName  rootProject.ext.version.versionName
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -24,11 +24,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation rootProject.ext.supportLibs
 
-    implementation project(":tableview")
-
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-11'  // 下拉刷新控件
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 }

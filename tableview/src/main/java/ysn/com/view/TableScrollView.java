@@ -1,4 +1,4 @@
-package ysn.com.demo.tableview;
+package ysn.com.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -12,7 +12,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="#008577"
             android:orientation="horizontal">
 
             <TextView
@@ -22,7 +22,7 @@
                 android:text="标题1"
                 android:textColor="@android:color/white" />
 
-            <ysn.com.demo.tableview.TableScrollView
+            <ysn.com.view.TableScrollView
                 android:id="@+id/table_view_head_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                         android:text="标题6"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
-            </ysn.com.demo.tableview.TableScrollView>
+            </ysn.com.view.TableScrollView>
         </LinearLayout>
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -88,7 +88,7 @@
                     android:focusable="false"
                     android:overScrollMode="never" />
 
-                <ysn.com.demo.tableview.TableScrollView
+                <ysn.com.view.TableScrollView
                     android:id="@+id/table_view_content_scroll_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -100,7 +100,7 @@
                         android:layout_height="match_parent"
                         android:focusable="false"
                         android:overScrollMode="never" />
-                </ysn.com.demo.tableview.TableScrollView>
+                </ysn.com.view.TableScrollView>
             </LinearLayout>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
