@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TableView">
+        <attr name="tv_left_top_head_layout_res_id" format="reference" />
+    </declare-styleable>
+</resources>

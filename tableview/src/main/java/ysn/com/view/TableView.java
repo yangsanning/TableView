@@ -1,8 +1,11 @@
 package ysn.com.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewStub;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -26,10 +29,14 @@ import ysn.com.view.tableview.R;
  */
 public class TableView extends LinearLayout implements TableScrollView.OnScrollChangeListener {
 
+    private int leftTopHeadLayoutResId = NO_ID;
+
     private Context context;
 
     private OnTableRefreshAndLoadMoreListener onTableRefreshAndLoadMoreListener;
 
+    private ViewStub leftTopHeadViewStub;
+    private View leftTopHeadView;
     private TableScrollView headScrollView, contentScrollView;
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView firstColumnRecyclerView, contentRecyclerView;
@@ -44,34 +51,54 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
 
     public TableView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init(context, attrs);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public TableView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
+        init(context, attrs);
     }
 
-    private void init(Context context) {
+    private void init(Context context, AttributeSet attrs) {
         this.context = context;
+        initAttrs(attrs);
+        initView();
+    }
+
+    private void initAttrs(AttributeSet attrs) {
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TableView);
+        leftTopHeadLayoutResId = typedArray.getResourceId(R.styleable.TableView_tv_left_top_head_layout_res_id, View.NO_ID);
+    }
+
+    private void initView() {
         LinearLayout.inflate(context, R.layout.item_table_view, this);
-
-        initScrollView();
-        initRefreshLayout();
-        initFirstColumnRecyclerView();
-        initContentRecyclerView();
-    }
-
-    private void initScrollView() {
+        leftTopHeadViewStub = findViewById(R.id.table_view_left_top_head_view_stub);
         headScrollView = findViewById(R.id.table_view_head_scroll_view);
-        headScrollView.setOnScrollChangeListener(this);
         contentScrollView = findViewById(R.id.table_view_content_scroll_view);
-        contentScrollView.setOnScrollChangeListener(this);
+        smartRefreshLayout = findViewById(R.id.table_view_refresh_layout);
+        firstColumnRecyclerView = findViewById(R.id.table_view_first_column);
+        firstColumnRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        contentRecyclerView = findViewById(R.id.table_view_content);
+        contentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        initViewStub();
+        initViewListener();
     }
 
-    private void initRefreshLayout() {
-        smartRefreshLayout = findViewById(R.id.table_view_refresh_layout);
+    private void initViewStub() {
+        if (leftTopHeadLayoutResId != View.NO_ID) {
+            leftTopHeadViewStub.setLayoutResource(leftTopHeadLayoutResId);
+            leftTopHeadView = leftTopHeadViewStub.inflate();
+        }
+    }
+
+    private void initViewListener() {
+        // 横向滚动监听, 进行联动
+        headScrollView.setOnScrollChangeListener(this);
+        contentScrollView.setOnScrollChangeListener(this);
+
+        // 刷新加载更多监听
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -87,11 +114,8 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
                 }
             }
         });
-    }
 
-    private void initFirstColumnRecyclerView() {
-        firstColumnRecyclerView = findViewById(R.id.table_view_first_column);
-        firstColumnRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        // 首列竖向滚动监听, 进行联动
         firstColumnRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -100,15 +124,12 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
                 }
             }
         });
-    }
 
-    private void initContentRecyclerView() {
-        contentRecyclerView = findViewById(R.id.table_view_content);
-        contentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        // 内容竖向滚动监听, 进行联动
         contentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView,dx,dy);
+                super.onScrolled(recyclerView, dx, dy);
                 if (recyclerView.getScrollState() != RecyclerView.SCROLL_STATE_IDLE) {
                     firstColumnRecyclerView.scrollBy(dx, dy);
                 }
@@ -118,6 +139,7 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
 
     @Override
     public void onScrollChanged(TableScrollView scrollView, int x, int y) {
+        // 联动
         if (scrollView.equals(headScrollView)) {
             contentScrollView.scrollTo(x, y);
         } else {
@@ -133,6 +155,20 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
     @Override
     public void onScrollFarRight(TableScrollView scrollView) {
 
+    }
+
+    /**
+     * 获取左上角 ViewStub
+     */
+    public ViewStub getLeftTopHeadViewStub() {
+        return leftTopHeadViewStub;
+    }
+
+    /**
+     * 获取左上角 View
+     */
+    public View getLeftTopHeadView() {
+        return leftTopHeadView;
     }
 
     /**

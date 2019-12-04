@@ -15,12 +15,10 @@
             android:background="#008577"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:text="标题1"
-                android:textColor="@android:color/white" />
+            <ViewStub
+                android:id="@+id/table_view_left_top_head_view_stub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <ysn.com.view.TableScrollView
                 android:id="@+id/table_view_head_scroll_view"

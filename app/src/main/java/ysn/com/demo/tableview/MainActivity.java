@@ -2,6 +2,7 @@ package ysn.com.demo.tableview;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity  {
         // 禁止ScrollView的回弹
         tableView.getHeadScrollView().setOverScrollMode(View.OVER_SCROLL_NEVER);
         tableView.getContentScrollView().setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        // 获取自定义左上角布局的TextView, 并设置值
+        ((TextView) tableView.getLeftTopHeadView().findViewById(R.id.left_top_head_table_layout_text)).setText("自定义标题");
 
         firstColumnAdapter.setNewData(getNewData());
         contentAdapter.setNewData(getNewData());
