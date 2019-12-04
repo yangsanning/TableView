@@ -29,14 +29,14 @@ import ysn.com.view.tableview.R;
  */
 public class TableView extends LinearLayout implements TableScrollView.OnScrollChangeListener {
 
-    private int leftTopHeadLayoutResId = NO_ID;
-
     private Context context;
 
     private OnTableRefreshAndLoadMoreListener onTableRefreshAndLoadMoreListener;
 
-    private ViewStub leftTopHeadViewStub;
-    private View leftTopHeadView;
+    private int leftTopHeadLayoutResId = NO_ID, headLayoutResId = NO_ID;
+
+    private ViewStub leftTopHeadViewStub, headViewStub;
+    private View leftTopHeadView, headView;
     private TableScrollView headScrollView, contentScrollView;
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView firstColumnRecyclerView, contentRecyclerView;
@@ -68,12 +68,17 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
 
     private void initAttrs(AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TableView);
+
         leftTopHeadLayoutResId = typedArray.getResourceId(R.styleable.TableView_tv_left_top_head_layout_res_id, View.NO_ID);
+        headLayoutResId = typedArray.getResourceId(R.styleable.TableView_tv_head_layout_res_id, View.NO_ID);
+
+        typedArray.recycle();
     }
 
     private void initView() {
         LinearLayout.inflate(context, R.layout.item_table_view, this);
         leftTopHeadViewStub = findViewById(R.id.table_view_left_top_head_view_stub);
+        headViewStub = findViewById(R.id.table_view_head_view_stub);
         headScrollView = findViewById(R.id.table_view_head_scroll_view);
         contentScrollView = findViewById(R.id.table_view_content_scroll_view);
         smartRefreshLayout = findViewById(R.id.table_view_refresh_layout);
@@ -90,6 +95,10 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
         if (leftTopHeadLayoutResId != View.NO_ID) {
             leftTopHeadViewStub.setLayoutResource(leftTopHeadLayoutResId);
             leftTopHeadView = leftTopHeadViewStub.inflate();
+        }
+        if (headLayoutResId != View.NO_ID) {
+            headViewStub.setLayoutResource(headLayoutResId);
+            headView = headViewStub.inflate();
         }
     }
 
@@ -169,6 +178,20 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
      */
     public View getLeftTopHeadView() {
         return leftTopHeadView;
+    }
+
+    /**
+     * 获取头部 ViewStub
+     */
+    public ViewStub getHeadViewStub() {
+        return headViewStub;
+    }
+
+    /**
+     * 获取头部 View
+     */
+    public View getHeadView() {
+        return headView;
     }
 
     /**

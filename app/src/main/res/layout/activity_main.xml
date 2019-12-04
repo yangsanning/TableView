@@ -9,5 +9,6 @@
         android:id="@+id/main_activity_table_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:tv_head_layout_res_id="@layout/layout_table_head"
         app:tv_left_top_head_layout_res_id="@layout/layout_table_left_top_head" />
 </LinearLayout>

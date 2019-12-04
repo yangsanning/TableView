@@ -12,7 +12,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#008577"
             android:orientation="horizontal">
 
             <ViewStub
@@ -26,46 +25,10 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none">
 
-                <LinearLayout
+                <ViewStub
+                    android:id="@+id/table_view_head_view_stub"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="60dp"
-                        android:gravity="center"
-                        android:text="标题2"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="60dp"
-                        android:gravity="center"
-                        android:text="标题3"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="60dp"
-                        android:gravity="center"
-                        android:text="标题4"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="60dp"
-                        android:gravity="center"
-                        android:text="标题5"
-                        android:textColor="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="120dp"
-                        android:layout_height="60dp"
-                        android:gravity="center"
-                        android:text="标题6"
-                        android:textColor="@android:color/white" />
-                </LinearLayout>
+                    android:layout_height="wrap_content" />
             </ysn.com.view.TableScrollView>
         </LinearLayout>
 
