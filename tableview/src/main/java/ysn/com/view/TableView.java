@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
@@ -131,6 +132,7 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
                 if (recyclerView.getScrollState() != RecyclerView.SCROLL_STATE_IDLE) {
                     contentRecyclerView.scrollBy(dx, dy);
                 }
+                Log.d("test", "firstColumnRecyclerView" + " state: " + recyclerView.getScrollState());
             }
         });
 
@@ -142,6 +144,7 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
                 if (recyclerView.getScrollState() != RecyclerView.SCROLL_STATE_IDLE) {
                     firstColumnRecyclerView.scrollBy(dx, dy);
                 }
+                Log.d("test", "contentRecyclerView" + " state: " + recyclerView.getScrollState());
             }
         });
     }

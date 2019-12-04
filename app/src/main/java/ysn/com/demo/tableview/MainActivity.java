@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import ysn.com.demo.tableview.adapter.ContentAdapter;
+import ysn.com.demo.tableview.adapter.FirstColumnAdapter;
+import ysn.com.demo.tableview.bean.Stock;
 import ysn.com.view.TableView;
 
 /**
@@ -19,6 +22,8 @@ import ysn.com.view.TableView;
  * @History 2019/11/29 author: description:
  */
 public class MainActivity extends AppCompatActivity  {
+
+    private List<Stock> dataList = new ArrayList<>();
 
     private FirstColumnAdapter firstColumnAdapter;
     private ContentAdapter contentAdapter;
@@ -39,8 +44,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onTableRefresh() {
                 tableView.postDelayed(() -> {
-                    firstColumnAdapter.setNewData(getNewData());
-                    contentAdapter.setNewData(getNewData());
+                    setNewData();
                     tableView.refreshSuccess();
                 }, 300);
             }
@@ -48,11 +52,11 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onTableLoadMore() {
                 tableView.postDelayed(() -> {
-                    List<String> data = contentAdapter.getData();
+                    List<Stock> data = contentAdapter.getData();
                     int size = data.size();
                     if (size < 60) {
                         for (int i = size; i < (size + 20); i++) {
-                            data.add("哈哈");
+                            data.add(new Stock());
                         }
                         tableView.loadMoreSuccess();
                         firstColumnAdapter.setNewData(data);
@@ -71,17 +75,17 @@ public class MainActivity extends AppCompatActivity  {
         tableView.getContentScrollView().setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // 获取自定义左上角布局的TextView, 并设置值
-        ((TextView) tableView.getLeftTopHeadView().findViewById(R.id.left_top_head_table_layout_text)).setText("自定义标题");
+        ((TextView) tableView.getLeftTopHeadView().findViewById(R.id.left_top_head_table_layout_text)).setText("名称");
 
-        firstColumnAdapter.setNewData(getNewData());
-        contentAdapter.setNewData(getNewData());
+        setNewData();
     }
 
-    private List<String> getNewData() {
-        List<String> dataList = new ArrayList<>();
+    private void setNewData() {
+        dataList.clear();
         for (int i = 0; i < 20; i++) {
-            dataList.add("哈哈");
+            dataList.add(new Stock());
         }
-        return dataList;
+        firstColumnAdapter.setNewData(dataList);
+        contentAdapter.setNewData(dataList);
     }
 }

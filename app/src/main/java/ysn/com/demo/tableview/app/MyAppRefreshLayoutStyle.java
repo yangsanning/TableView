@@ -1,8 +1,11 @@
-package ysn.com.demo.tableview;
+package ysn.com.demo.tableview.app;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+
+import ysn.com.demo.tableview.utils.DynamicTimeFormatUtil;
+import ysn.com.demo.tableview.R;
 
 /**
  * @Author yangsanning

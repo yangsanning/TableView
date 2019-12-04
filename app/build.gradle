@@ -29,6 +29,9 @@ dependencies {
 
     implementation project(":tableview")
 
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-11'  // 下拉刷新控件
+    // 下拉刷新控件(TableView中有引用)
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-11'
+
+    // 用于数据演示
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 }

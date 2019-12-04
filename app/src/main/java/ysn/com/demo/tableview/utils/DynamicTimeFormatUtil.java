@@ -1,4 +1,4 @@
-package ysn.com.demo.tableview;
+package ysn.com.demo.tableview.utils;
 
 import androidx.annotation.NonNull;
 
