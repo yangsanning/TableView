@@ -10,6 +10,7 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:text="代码"
+        android:textStyle="bold"
         android:textColor="@android:color/white" />
 
     <TextView
@@ -17,6 +18,7 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:text="价格"
+        android:textStyle="bold"
         android:textColor="@android:color/white" />
 
     <TextView
@@ -24,6 +26,7 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:text="涨跌幅"
+        android:textStyle="bold"
         android:textColor="@android:color/white" />
 
     <TextView
@@ -31,6 +34,7 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:text="量比"
+        android:textStyle="bold"
         android:textColor="@android:color/white" />
 
     <TextView
@@ -38,5 +42,6 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:text="成交额"
+        android:textStyle="bold"
         android:textColor="@android:color/white" />
 </LinearLayout>
