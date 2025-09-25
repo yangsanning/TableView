@@ -33,7 +33,7 @@
             </ysn.com.view.TableScrollView>
         </LinearLayout>
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/table_view_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -65,6 +65,6 @@
                         android:overScrollMode="never" />
                 </ysn.com.view.TableScrollView>
             </LinearLayout>
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
     </LinearLayout>
 </LinearLayout>

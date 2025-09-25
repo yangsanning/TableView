@@ -1,20 +1,9 @@
 ext {
     version = [
-            minSdkVersion    : 19,
-            compileSdkVersion: 29,
-            targetSdkVersion : 29,
+            minSdkVersion    : 21,
+            compileSdkVersion: 33,
+            targetSdkVersion : 33,
             versionCode      : 10000,
             versionName      : "1.0.0",
     ]
-
-    dependVersion = [
-            support_version: "29.0.0",
-    ]
-
-    supportLib = [
-            v7: "com.android.support:appcompat-v7:$dependVersion.support_version",
-            recyclerview: "com.android.support:recyclerview-v7:$dependVersion.support_version",
-    ]
-
-    supportLibs = supportLib.values()
 }
