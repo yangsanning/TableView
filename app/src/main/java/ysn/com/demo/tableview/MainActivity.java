@@ -5,12 +5,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ysn.com.demo.tableview.adapter.ContentAdapter;
 import ysn.com.demo.tableview.adapter.FirstColumnAdapter;
+import ysn.com.demo.tableview.adapter.HeaderAdapter;
 import ysn.com.demo.tableview.bean.Stock;
 import ysn.com.view.TableView;
 
@@ -21,7 +24,7 @@ import ysn.com.view.TableView;
  * @Date 2019/11/29
  * @History 2019/11/29 author: description:
  */
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     private List<Stock> dataList = new ArrayList<>();
 
@@ -41,34 +44,34 @@ public class MainActivity extends AppCompatActivity  {
         contentAdapter = new ContentAdapter();
 
         tableView.setOnTableRefreshAndLoadMoreListener(new TableView.OnTableRefreshAndLoadMoreListener() {
-            @Override
-            public void onTableRefresh() {
-                tableView.postDelayed(() -> {
-                    setNewData();
-                    tableView.refreshSuccess();
-                }, 300);
-            }
-
-            @Override
-            public void onTableLoadMore() {
-                tableView.postDelayed(() -> {
-                    List<Stock> data = contentAdapter.getData();
-                    int size = data.size();
-                    if (size < 60) {
-                        for (int i = size; i < (size + 20); i++) {
-                            data.add(new Stock());
-                        }
-                        tableView.loadMoreSuccess();
-                        firstColumnAdapter.setNewData(data);
-                        contentAdapter.setNewData(data);
-                    } else {
-                        tableView.loadMoreSuccessWithNoMoreData();
+                    @Override
+                    public void onTableRefresh() {
+                        tableView.postDelayed(() -> {
+                            setNewData();
+                            tableView.refreshSuccess();
+                        }, 300);
                     }
-                }, 300);
-            }
-        })
-            .setFirstColumnAdapter(firstColumnAdapter)
-            .setContentAdapter(contentAdapter);
+
+                    @Override
+                    public void onTableLoadMore() {
+                        tableView.postDelayed(() -> {
+                            List<Stock> data = contentAdapter.getData();
+                            int size = data.size();
+                            if (size < 60) {
+                                for (int i = size; i < (size + 20); i++) {
+                                    data.add(new Stock());
+                                }
+                                tableView.loadMoreSuccess();
+                                firstColumnAdapter.setNewData(data);
+                                contentAdapter.setNewData(data);
+                            } else {
+                                tableView.loadMoreSuccessWithNoMoreData();
+                            }
+                        }, 300);
+                    }
+                })
+                .setFirstColumnAdapter(firstColumnAdapter)
+                .setContentAdapter(contentAdapter);
 
         // 禁止ScrollView的回弹
         tableView.getHeadScrollView().setOverScrollMode(View.OVER_SCROLL_NEVER);
@@ -77,7 +80,23 @@ public class MainActivity extends AppCompatActivity  {
         // 获取自定义左上角布局的TextView, 并设置值
         ((TextView) tableView.getLeftTopHeadView().findViewById(R.id.left_top_head_table_layout_text)).setText("名称");
 
+        initHeader();
+
         setNewData();
+    }
+
+    private void initHeader() {
+        List<String> dataList = new ArrayList<>();
+        dataList.add("代码");
+        dataList.add("价格");
+        dataList.add("涨跌幅");
+        dataList.add("量比");
+        dataList.add("成交额");
+        RecyclerView recyclerView = tableView.getHeadView().findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, dataList.size()));
+        HeaderAdapter adapter = new HeaderAdapter();
+        recyclerView.setAdapter(adapter);
+        adapter.setNewData(dataList);
     }
 
     private void setNewData() {
