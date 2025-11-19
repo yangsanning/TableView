@@ -125,26 +125,51 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
             }
         });
 
-        // 首列竖向滚动监听, 进行联动
         firstColumnRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if (recyclerView.getScrollState() != RecyclerView.SCROLL_STATE_IDLE) {
-                    contentRecyclerView.scrollBy(dx, dy);
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    // 用户手动拖动，停止 contentRecyclerView fling
+                    contentRecyclerView.stopScroll();
                 }
-                Log.d("test", "firstColumnRecyclerView" + " state: " + recyclerView.getScrollState());
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) return;
+
+                LinearLayoutManager firstLM = (LinearLayoutManager) recyclerView.getLayoutManager();
+                LinearLayoutManager contentLM = (LinearLayoutManager) contentRecyclerView.getLayoutManager();
+                if (firstLM != null && contentLM != null) {
+                    int firstVisible = firstLM.findFirstVisibleItemPosition();
+                    View child = recyclerView.getChildAt(0);
+                    int top = (child == null) ? 0 : child.getTop();
+                    contentLM.scrollToPositionWithOffset(firstVisible, top);
+                }
             }
         });
 
-        // 内容竖向滚动监听, 进行联动
         contentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (recyclerView.getScrollState() != RecyclerView.SCROLL_STATE_IDLE) {
-                    firstColumnRecyclerView.scrollBy(dx, dy);
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    // 用户手动拖动，停止 firstColumnRecyclerView fling
+                    firstColumnRecyclerView.stopScroll();
                 }
-                Log.d("test", "contentRecyclerView" + " state: " + recyclerView.getScrollState());
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) return;
+
+                LinearLayoutManager contentLM = (LinearLayoutManager) recyclerView.getLayoutManager();
+                LinearLayoutManager firstLM = (LinearLayoutManager) firstColumnRecyclerView.getLayoutManager();
+                if (contentLM != null && firstLM != null) {
+                    int firstVisible = contentLM.findFirstVisibleItemPosition();
+                    View child = recyclerView.getChildAt(0);
+                    int top = (child == null) ? 0 : child.getTop();
+                    firstLM.scrollToPositionWithOffset(firstVisible, top);
+                }
             }
         });
     }
