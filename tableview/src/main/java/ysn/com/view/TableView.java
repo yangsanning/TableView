@@ -88,6 +88,9 @@ public class TableView extends LinearLayout implements TableScrollView.OnScrollC
         contentRecyclerView = findViewById(R.id.table_view_content);
         contentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
+        // 绑定 rv, 确保嵌套滚动
+        VerticalSyncLinearLayout verticalSyncLayout = findViewById(R.id.verticalSyncLayout);
+        verticalSyncLayout.setRecyclerViews(firstColumnRecyclerView, contentRecyclerView);
         initViewStub();
         initViewListener();
     }

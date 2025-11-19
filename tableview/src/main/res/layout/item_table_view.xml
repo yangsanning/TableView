@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -36,10 +35,10 @@
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/table_view_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srlEnableScrollContentWhenLoaded="false">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <ysn.com.view.VerticalSyncLinearLayout
+                android:id="@+id/verticalSyncLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -64,7 +63,7 @@
                         android:focusable="false"
                         android:overScrollMode="never" />
                 </ysn.com.view.TableScrollView>
-            </LinearLayout>
+            </ysn.com.view.VerticalSyncLinearLayout>
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
     </LinearLayout>
 </LinearLayout>

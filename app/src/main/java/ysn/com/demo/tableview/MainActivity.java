@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                         tableView.postDelayed(() -> {
                             List<Stock> data = contentAdapter.getData();
                             int size = data.size();
-                            if (size < 60) {
+                            if (size < 80) {
                                 for (int i = size; i < (size + 20); i++) {
                                     data.add(new Stock());
                                 }
